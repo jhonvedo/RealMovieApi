@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MovieStore.Services;
 using RealMovieApi.Utils;
 using RealMovieContext;
 using RealMovieContext.Models;
@@ -47,6 +48,7 @@ namespace RealMovieApi
            _= services.AddScoped<SignInManager<ApplicationUser>>();
            _= services.AddScoped<UserManager<ApplicationUser>>();
            _= services.AddScoped<RoleManager<IdentityRole>>();
+            _ = services.AddScoped<ShowService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
