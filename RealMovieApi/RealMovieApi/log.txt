@@ -1,0 +1,1 @@
+2020-05-12 21:40:15.901 -05:00 [INF] action:GET endpoint:/weatherforecast

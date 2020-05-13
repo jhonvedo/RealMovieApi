@@ -5,6 +5,7 @@ using System.Security;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RealMovieApi.Models.Context;
+using RealMovieApi.Utils;
+using Serilog;
 
 namespace RealMovieApi
 {
@@ -28,30 +31,33 @@ namespace RealMovieApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
-            services.AddDbContext<IdentityContext>(options =>
-       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            _ = services.AddControllers();
+            _ = services.AddDbContext<IdentityContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            _= app.Use(async (context, next) =>
+            {
+                //TODO:serilog
+                LogService.InsertLog(context.Request.Method,"",context.Request.Path);
+                 await next.Invoke();
+            });
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                _ = app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            _=app.UseHttpsRedirection();
+            _=app.UseRouting();
+            _=app.UseAuthorization();
+            _ = app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });          
+
         }
     }
 }
