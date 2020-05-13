@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RealMovieApi.Migrations
+namespace RealMovieContext.Migrations
 {
     public partial class Initial : Migration
     {
@@ -33,6 +33,7 @@ namespace RealMovieApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.UniqueConstraint("AK_Users_UserName", x => x.UserName);
                     table.ForeignKey(
                         name: "FK_Users_Roles_RoleId",
                         column: x => x.RoleId,

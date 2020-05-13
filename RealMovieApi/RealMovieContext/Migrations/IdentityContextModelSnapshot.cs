@@ -2,17 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RealMovieApi.Models.Context;
+using RealMovieContext;
 
-namespace RealMovieApi.Migrations
+namespace RealMovieContext.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20200513013343_Initial")]
-    partial class Initial
+    partial class IdentityContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,7 +18,7 @@ namespace RealMovieApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RealMovieApi.Models.Role", b =>
+            modelBuilder.Entity("RealMovieContext.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +37,7 @@ namespace RealMovieApi.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("RealMovieApi.Models.User", b =>
+            modelBuilder.Entity("RealMovieContext.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,18 +53,20 @@ namespace RealMovieApi.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("UserName");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RealMovieApi.Models.User", b =>
+            modelBuilder.Entity("RealMovieContext.Models.User", b =>
                 {
-                    b.HasOne("RealMovieApi.Models.Role", "Role")
+                    b.HasOne("RealMovieContext.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

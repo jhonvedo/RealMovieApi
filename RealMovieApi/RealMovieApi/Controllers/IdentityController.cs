@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealMovieApi.Models;
-using RealMovieApi.Models.Context;
 using RealMovieApi.Utils;
+using RealMovieContext;
+using RealMovieContext.Models;
 
 namespace RealMovieApi.Controllers
 {

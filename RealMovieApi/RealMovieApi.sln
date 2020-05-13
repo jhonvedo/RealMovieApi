@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealMovieApi", "RealMovieAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieStore", "MovieStore\MovieStore.csproj", "{FF8F7CC4-1EF0-40BC-B337-3832BAAC7D88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealMovieContext", "RealMovieContext\RealMovieContext.csproj", "{8C899EC7-457D-4BC9-B62E-11F7D40200B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{D1315646-7D7F-4804-894A-0C25FDB841D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieStore.Test", "MovieStore.Test\MovieStore.Test.csproj", "{06D66B74-5AFD-4F43-BE0D-A57CE9E6E9C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +27,20 @@ Global
 		{FF8F7CC4-1EF0-40BC-B337-3832BAAC7D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8F7CC4-1EF0-40BC-B337-3832BAAC7D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8F7CC4-1EF0-40BC-B337-3832BAAC7D88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C899EC7-457D-4BC9-B62E-11F7D40200B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C899EC7-457D-4BC9-B62E-11F7D40200B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C899EC7-457D-4BC9-B62E-11F7D40200B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C899EC7-457D-4BC9-B62E-11F7D40200B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06D66B74-5AFD-4F43-BE0D-A57CE9E6E9C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06D66B74-5AFD-4F43-BE0D-A57CE9E6E9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06D66B74-5AFD-4F43-BE0D-A57CE9E6E9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06D66B74-5AFD-4F43-BE0D-A57CE9E6E9C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06D66B74-5AFD-4F43-BE0D-A57CE9E6E9C0} = {D1315646-7D7F-4804-894A-0C25FDB841D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6AEB4F7E-34C2-425E-B5F2-E45CF2E971C1}
