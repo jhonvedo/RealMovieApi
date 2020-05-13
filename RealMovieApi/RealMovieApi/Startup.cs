@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RealMovieApi.Utils;
 using RealMovieContext;
+using RealMovieContext.Models;
 using Serilog;
 
 namespace RealMovieApi
@@ -31,14 +33,28 @@ namespace RealMovieApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            _= services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            });
             _ = services.AddControllers();
-            _ = services.AddDbContext<IdentityContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),x=>x.MigrationsAssembly("RealMovieContext")));
+            _ = services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),x=>x.MigrationsAssembly("RealMovieContext")));
+            _= services.AddIdentity<ApplicationUser, IdentityRole>()
+                  .AddEntityFrameworkStores<ApplicationDbContext>()
+                  .AddDefaultTokenProviders();
+
+           _= services.AddScoped<SignInManager<ApplicationUser>>();
+           _= services.AddScoped<UserManager<ApplicationUser>>();
+           _= services.AddScoped<RoleManager<IdentityRole>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            _= app.Use(async (context, next) =>
+            _= app.UseCors("AllowOrigin");
+
+            _ = app.Use(async (context, next) =>
             {
                 //TODO:serilog
                 LogService.InsertLog(context.Request.Method,"",context.Request.Path);
@@ -55,7 +71,7 @@ namespace RealMovieApi
             _=app.UseAuthorization();
             _ = app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                _= endpoints.MapControllers();
             });          
 
         }
