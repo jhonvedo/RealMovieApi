@@ -42,7 +42,14 @@ namespace RealMovieApi.Controllers
         [HttpPut]
         public async Task<IActionResult> PutUserAsync([FromBody]UserViewModel user)
         {
-            var response = await _userManager.UpdateAsync(user.ToIdentityUser());
+            var currentUser = await _userManager.FindByIdAsync(user.Id);
+            if(currentUser == null)
+            {
+                return NotFound();
+            }
+            _= currentUser.UpdateFromViewModel(user);
+
+            var response = await _userManager.UpdateAsync(currentUser);
             return response.Succeeded ? Ok(response) : (IActionResult)NotFound(GetErrorMessage(response));
         }
 

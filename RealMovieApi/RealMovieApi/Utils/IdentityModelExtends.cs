@@ -32,5 +32,19 @@ namespace RealMovieContext.Models
             return list;
         }
 
+        public static ApplicationUser UpdateFromViewModel(this ApplicationUser user, UserViewModel viewModel)
+        {
+            user.FirstName = viewModel.FirstName;
+            user.LastName = viewModel.LastName;
+            user.IsAdmin = viewModel.IsAdmin;
+            user.Email = viewModel.Email;
+            user.UserName = viewModel.UserName;
+
+
+            return user;
+        }
+
+        
+
     }
 }
