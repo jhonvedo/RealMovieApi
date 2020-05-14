@@ -46,8 +46,7 @@ namespace RealMovieApi
                   .AddDefaultTokenProviders();
 
            _= services.AddScoped<SignInManager<ApplicationUser>>();
-           _= services.AddScoped<UserManager<ApplicationUser>>();
-           _= services.AddScoped<RoleManager<IdentityRole>>();
+           _= services.AddScoped<UserManager<ApplicationUser>>();         
             _ = services.AddScoped<ShowService>();
         }
 

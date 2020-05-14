@@ -19,9 +19,6 @@ namespace RealMovieContext
         {
             base.OnModelCreating(builder);
 
-            _= builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name="Administrator",NormalizedName= "ADMINISTRATOR" });
-            _= builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name = "User",NormalizedName="USER" });
-
             var user = new ApplicationUser
             {
                 FirstName = "Jhon",
@@ -32,7 +29,8 @@ namespace RealMovieContext
                 NormalizedUserName = "JHON.VEDO@GMAIL.COM",               
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString("D")
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                IsAdmin=true
             };
             var password = new PasswordHasher<ApplicationUser>();
             var hashed = password.HashPassword(user, "America2020*");

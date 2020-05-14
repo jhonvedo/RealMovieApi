@@ -11,8 +11,7 @@ namespace RealMovieContext.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        [NotMapped]
-        public IEnumerable<string> Roles { get; set; }
+        public bool IsAdmin { get; set; }
+        
     }
 }

@@ -15,38 +15,25 @@ namespace RealMovieApi.Controllers
     public class UserController : ControllerBase
     {       
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+       
+        public UserController(UserManager<ApplicationUser> userManager)
         {           
-            _userManager = userManager;
-            _roleManager = roleManager;
+            _userManager = userManager;          
         }
 
        
         [HttpGet]
-        public async Task<IActionResult> GetUserAsync()
+        public IActionResult GetUser()
         {
-            var users = _userManager.Users.ToArray();
-            foreach (var user in users)
-            {
-                user.Roles = await _userManager.GetRolesAsync(user);
-
-            }
+            var users = _userManager.Users;           
             return Ok(users);
         }
 
          
         [HttpPost]
-        public async Task<IActionResult> PostUserAsync([FromBody]ApplicationUser user, [FromHeader]string password, [FromHeader]string roleId)
+        public async Task<IActionResult> PostUserAsync([FromBody]ApplicationUser user, [FromHeader]string password)
         {
             var result = await _userManager.CreateAsync(user, password);
-
-            if (result.Succeeded)
-            {
-                var currentUser = await _userManager.FindByEmailAsync(user.Email);
-                var role = await _roleManager.FindByIdAsync(roleId);
-                var roleresult = await _userManager.AddToRoleAsync(currentUser, role.Name);
-            }
             return Ok(result);
         }
 
