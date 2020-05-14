@@ -88,4 +88,18 @@ namespace MovieStore.Models
     }
 
 
+    public class WebChannel
+    {
+
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("country")]
+        public Country Country { get; set; }
+    }
+
+
 }
