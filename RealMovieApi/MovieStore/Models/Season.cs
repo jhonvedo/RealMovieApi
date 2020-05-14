@@ -32,8 +32,8 @@ namespace MovieStore.Models
         [JsonProperty("network")]
         public Network Network { get; set; }
 
-        [JsonProperty("webChannel")]
-        public object WebChannel { get; set; }
+        //[JsonProperty("webChannel")]
+        //public object WebChannel { get; set; }
 
         [JsonProperty("image")]
         public Image Image { get; set; }

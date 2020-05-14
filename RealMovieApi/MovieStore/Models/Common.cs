@@ -75,7 +75,7 @@ namespace MovieStore.Models
         public string Birthday { get; set; }
 
         [JsonProperty("deathday")]
-        public object Deathday { get; set; }
+        public string Deathday { get; set; }
 
         [JsonProperty("gender")]
         public string Gender { get; set; }

@@ -19,8 +19,8 @@ namespace RealMovieContext
         {
             base.OnModelCreating(builder);
 
-            _= builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name="Administrator"});
-            _= builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name = "User" });
+            _= builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name="Administrator",NormalizedName= "ADMINISTRATOR" });
+            _= builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name = "User",NormalizedName="USER" });
 
             var user = new ApplicationUser
             {

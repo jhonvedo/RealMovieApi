@@ -40,8 +40,17 @@ namespace MovieStore.Models
 
         [JsonProperty("href")]
         public string Href { get; set; }
-    }   
+    }
 
+    public class Embedded
+    {
+
+        [JsonProperty("episodes")]
+        public IList<Episode> Episodes { get; set; }
+
+        [JsonProperty("cast")]
+        public IList<Cast> Cast { get; set; }
+    }
     public class Show
     {
 
@@ -87,8 +96,8 @@ namespace MovieStore.Models
         [JsonProperty("network")]
         public Network Network { get; set; }
 
-        [JsonProperty("webChannel")]
-        public object WebChannel { get; set; }
+        //[JsonProperty("webChannel")]
+        //public object WebChannel { get; set; }
 
         [JsonProperty("externals")]
         public Externals Externals { get; set; }
@@ -104,5 +113,8 @@ namespace MovieStore.Models
 
         [JsonProperty("_links")]
         public Links Links { get; set; }
+
+        [JsonProperty("_embedded")]
+        public Embedded Embedded { get; set; }
     }
 }

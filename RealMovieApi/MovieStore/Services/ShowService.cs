@@ -13,11 +13,24 @@ namespace MovieStore.Services
         {
             return Execute<List<Show>>(PATH);
         }
-        public Show GetShow(int id)
+        public Show GetShow(int id,bool embedCast=false,bool embedEpisodes=false)
         {
             string pathComplement = $"{PATH}/{id}";
+
+            if(embedCast && embedEpisodes)
+            {
+                pathComplement = $"{pathComplement}?embed[]=episodes&embed[]=cast";
+            }
+            else
+            {
+                if(embedCast) pathComplement = $"{pathComplement}?embed=cast";
+                if (embedEpisodes) pathComplement = $"{pathComplement}?embed=episodes";
+            }
+            
+
             return Execute<Show>(pathComplement);
-        }
+        }      
+
         public List<Search> SearchShows(string query)
         {
             string pathComplement = $"{PATH}?q={query}";
@@ -30,7 +43,7 @@ namespace MovieStore.Services
             return Execute<List<Season>>(pathComplement);
         }
 
-        public Episode GetEpisode(int showId,int season,int episodeId)
+        public Episode GetEpisode(int showId, int season, int episodeId)
         {
             string pathComplement = $"{PATH}/{showId}/episodebynumber?season={season}&number={episodeId}";
             return Execute<Episode>(pathComplement);
@@ -41,7 +54,7 @@ namespace MovieStore.Services
             return Execute<List<Episode>>(pathComplement);
         }
 
-        public List<Episode> GetEpisodesByDate(int showId,DateTime time)
+        public List<Episode> GetEpisodesByDate(int showId, DateTime time)
         {
             string pathComplement = $"{PATH}/{showId}/episodesbydate?date={time.ToString("yyyy-MM-dd")}";
             return Execute<List<Episode>>(pathComplement);

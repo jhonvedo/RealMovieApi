@@ -56,12 +56,12 @@ namespace RealMovieApi
         {
             _= app.UseCors("AllowOrigin");
 
-            _ = app.Use(async (context, next) =>
-            {
-                //TODO:serilog
-                LogService.InsertLog(context.Request.Method,"",context.Request.Path);
-                 await next.Invoke();
-            });
+            //_ = app.Use(async (context, next) =>
+            //{
+            //    //TODO:serilog
+            //    LogService.InsertLog(context.Request.Method,"",context.Request.Path);
+            //     await next.Invoke();
+            //});
 
             if (env.IsDevelopment())
             {

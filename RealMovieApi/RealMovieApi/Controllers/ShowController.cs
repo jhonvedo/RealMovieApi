@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.Services;
@@ -19,9 +20,18 @@ namespace RealMovieApi.Controllers
         }
         
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get()        
         {
-            return Ok(_showService.GetShows());
+            var data = _showService.GetShows();
+            return Ok(data);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get([FromRoute]int id)
+        {
+            var data = _showService.GetShow(id,true,true);
+            return Ok(data);
         }
     }
 }

@@ -10,33 +10,47 @@ using RealMovieContext.Models;
 // [Authorize(Roles = "Administrator")]
 namespace RealMovieApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.0/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {       
         private readonly UserManager<ApplicationUser> _userManager;
-        public UserController(UserManager<ApplicationUser> userManager)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {           
-            _userManager = userManager;         
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
-        [Route("User")]
+       
         [HttpGet]
-        public IActionResult GetUserAsync()
+        public async Task<IActionResult> GetUserAsync()
         {
-            var response = _userManager.Users;
-            return Ok(response);
+            var users = _userManager.Users.ToArray();
+            foreach (var user in users)
+            {
+                user.Roles = await _userManager.GetRolesAsync(user);
+
+            }
+            return Ok(users);
         }
 
-        [Route("User")]      
+         
         [HttpPost]
-        public async Task<IActionResult> PostUserAsync([FromBody]ApplicationUser user, [FromHeader]string password)
+        public async Task<IActionResult> PostUserAsync([FromBody]ApplicationUser user, [FromHeader]string password, [FromHeader]string roleId)
         {
-            var response = await _userManager.CreateAsync(user, password);
-            return Ok(response);
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                var currentUser = await _userManager.FindByEmailAsync(user.Email);
+                var role = await _roleManager.FindByIdAsync(roleId);
+                var roleresult = await _userManager.AddToRoleAsync(currentUser, role.Name);
+            }
+            return Ok(result);
         }
 
-        [Route("User")]       
+      
         [HttpPut]
         public async Task<IActionResult> PutUserAsync([FromBody]ApplicationUser user)
         {
@@ -44,7 +58,7 @@ namespace RealMovieApi.Controllers
             return Ok(response);
         }
 
-        [Route("User")]       
+       
         [HttpDelete]
         public async Task<IActionResult> DeleteUserAsync([FromBody]ApplicationUser user)
         {
