@@ -32,7 +32,11 @@ namespace RealMovieApi.Controllers
             }
 
             var identityUser = await _userManager.FindByNameAsync(username);
-            return Ok(identityUser);
+            if(identityUser == null)
+            {
+                return NotFound();
+            }
+            return Ok(identityUser.ToViewModel());
         }
 
      

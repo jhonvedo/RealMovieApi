@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,12 +57,12 @@ namespace RealMovieApi
         {
             _= app.UseCors("AllowOrigin");
 
-            //_ = app.Use(async (context, next) =>
-            //{
-            //    //TODO:serilog
-            //    LogService.InsertLog(context.Request.Method,"",context.Request.Path);
-            //     await next.Invoke();
-            //});
+            _ = app.Use(async (context, next) =>
+            {
+              
+                await next.Invoke();
+                LogService.InsertHttpLog(context);
+            });
 
             if (env.IsDevelopment())
             {
